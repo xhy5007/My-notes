@@ -1,1 +1,1 @@
-![DHCP](E:\My-notes\HCIA笔记\assets\DHCP.jpg)
+![DHCP](.\assets\DHCP.jpg)

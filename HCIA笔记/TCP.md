@@ -1,1 +1,1 @@
-![TCP](E:\My-notes\HCIA笔记\assets\TCP.jpg)
+![TCP](.\assets\TCP.jpg)
