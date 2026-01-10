@@ -1,1 +1,1 @@
-![TCP](.\assets\TCP.jpg)
+![TCP](assets\TCP.jpg)

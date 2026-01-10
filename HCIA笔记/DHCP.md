@@ -1,1 +1,1 @@
-![DHCP](.\assets\DHCP.jpg)
+![DHCP](assets/DHCP.jpg)
