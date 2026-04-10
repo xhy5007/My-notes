@@ -125,7 +125,6 @@ interface GigabitEthernet0/0/4
 
 ```
  sysname R1
-
 dhcp enable
 acl number 3000  
  rule 5 deny ip source 172.16.64.0 0.0.0.255 destination 172.16.128.128 0.0.0.127 
@@ -202,7 +201,6 @@ acl number 2000
 acl number 2001  
  rule 5 deny source 172.16.0.0 0.0.1.255 
  rule 10 permit 
-
  nat address-group 1 100.0.0.1 100.0.0.1
 interface Ethernet4/0/0
  ip address 172.1.130.1 255.255.255.0 
@@ -229,7 +227,6 @@ ip route-static 0.0.0.0 0.0.0.0 100.0.0.2
 
 ```
 sysname R4
-
 interface Ethernet4/0/0
  ip address 172.16.130.2 255.255.255.0 
 interface GigabitEthernet0/0/0
