@@ -124,152 +124,66 @@ interface GigabitEthernet0/0/4
 #### R1：
 
 ```
-[V200R003C00]
-#
  sysname R1
-#
- snmp-agent local-engineid 800007DB03000000000000
- snmp-agent 
-#
- clock timezone China-Standard-Time minus 08:00:00
-#
-portal local-server load flash:/portalpage.zip
-#
- drop illegal-mac alarm
-#
- wlan ac-global carrier id other ac id 0
-#
- set cpu-usage threshold 80 restore 75
-#
+
 dhcp enable
-#
 acl number 3000  
  rule 5 deny ip source 172.16.64.0 0.0.0.255 destination 172.16.128.128 0.0.0.127 
  rule 10 permit ip 
-#
 ip pool vlan10
  gateway-list 172.16.64.1 
  network 172.16.64.0 mask 255.255.255.0 
-#
 ip pool vlan20
  gateway-list 172.16.65.1 
  network 172.16.65.0 mask 255.255.255.0 
-#
-aaa 
- authentication-scheme default
- authorization-scheme default
- accounting-scheme default
- domain default 
- domain default_admin 
- local-user admin password cipher %$%$K8m.Nt84DZ}e#<0`8bmE3Uw}%$%$
- local-user admin service-type http
-#
-firewall zone Local
- priority 15
-#
 interface GigabitEthernet0/0/0
  ip address 172.16.67.1 255.255.255.0 
-#
 interface GigabitEthernet0/0/1
-#
 interface GigabitEthernet0/0/1.1
  dot1q termination vid 10
  ip address 172.16.64.1 255.255.255.0 
  traffic-filter inbound acl 3000
  dhcp select global
-#
 interface GigabitEthernet0/0/1.2
  dot1q termination vid 20
  ip address 172.16.65.1 255.255.255.0 
  dhcp select global
-#
 interface GigabitEthernet0/0/1.3
  dot1q termination vid 30
  ip address 172.16.66.1 255.255.255.0 
-#
 interface GigabitEthernet0/0/2
-#
-interface NULL0
-#
 ospf 1 router-id 1.1.1.1 
  area 0.0.0.1 
   network 172.16.64.0 0.0.0.255 
   network 172.16.65.0 0.0.0.255 
   network 172.16.66.0 0.0.0.255 
   network 172.16.67.0 0.0.0.255 
-#
-user-interface con 0
- authentication-mode password
-user-interface vty 0 4
-user-interface vty 16 20
-#
-wlan ac
-#
-return
 ```
 
 #### R2：
 
 ```
-[V200R003C00]
-#
  sysname R2
-#
- snmp-agent local-engineid 800007DB03000000000000
- snmp-agent 
-#
- clock timezone China-Standard-Time minus 08:00:00
-#
-portal local-server load flash:/portalpage.zip
-#
- drop illegal-mac alarm
-#
- wlan ac-global carrier id other ac id 0
-#
- set cpu-usage threshold 80 restore 75
-#
 dhcp enable
-#
 ip pool vlan40
  gateway-list 172.16.0.1 
  network 172.16.0.0 mask 255.255.255.0 
-#
 ip pool vlan50
  gateway-list 172.16.1.1 
  network 172.16.1.0 mask 255.255.255.0 
-#
-aaa 
- authentication-scheme default
- authorization-scheme default
- accounting-scheme default
- domain default 
- domain default_admin 
- local-user admin password cipher %$%$K8m.Nt84DZ}e#<0`8bmE3Uw}%$%$
- local-user admin service-type http
-#
-firewall zone Local
- priority 15
-#
 interface GigabitEthernet0/0/0
  ip address 172.16.67.2 255.255.255.0 
-#
 interface GigabitEthernet0/0/1
-#
 interface GigabitEthernet0/0/1.1
  dot1q termination vid 40
  ip address 172.16.0.1 255.255.255.0 
  dhcp select global
-#
 interface GigabitEthernet0/0/1.2
  dot1q termination vid 50
  ip address 172.16.1.1 255.255.255.0 
  dhcp select global
-#
 interface GigabitEthernet0/0/2
  ip address 172.16.2.1 255.255.255.0 
-#
-interface NULL0
-#
 ospf 1 router-id 2.2.2.2 
  area 0.0.0.0 
   network 172.16.0.0 0.0.0.255 
@@ -277,351 +191,113 @@ ospf 1 router-id 2.2.2.2
   network 172.16.2.0 0.0.0.255 
  area 0.0.0.1 
   network 172.16.67.0 0.0.0.255 
-#
-user-interface con 0
- authentication-mode password
-user-interface vty 0 4
-user-interface vty 16 20
-#
-wlan ac
-#
-return
 ```
 
 #### R3：
 
 ```
-[V200R003C00]
-#
- sysname R3
-#
- board add 0/4 2FE 
-#
- snmp-agent local-engineid 800007DB03000000000000
- snmp-agent 
-#
- clock timezone China-Standard-Time minus 08:00:00
-#
-portal local-server load flash:/portalpage.zip
-#
- drop illegal-mac alarm
-#
- wlan ac-global carrier id other ac id 0
-#
- set cpu-usage threshold 80 restore 75
-#
+sysname R3
 acl number 2000  
  rule 5 permit source 172.16.0.0 0.0.0.255 
 acl number 2001  
  rule 5 deny source 172.16.0.0 0.0.1.255 
  rule 10 permit 
-#
-aaa 
- authentication-scheme default
- authorization-scheme default
- accounting-scheme default
- domain default 
- domain default_admin 
- local-user admin password cipher %$%$K8m.Nt84DZ}e#<0`8bmE3Uw}%$%$
- local-user admin service-type http
-#
-firewall zone Local
- priority 15
-#
+
  nat address-group 1 100.0.0.1 100.0.0.1
-#
 interface Ethernet4/0/0
  ip address 172.1.130.1 255.255.255.0 
  traffic-filter outbound acl 2001
-#
 interface Ethernet4/0/1
-#
 interface GigabitEthernet0/0/0
  ip address 172.16.2.2 255.255.255.0 
-#
 interface GigabitEthernet0/0/1
  ip address 172.16.129.1 255.255.255.0 
  traffic-filter outbound acl 2001
-#
 interface GigabitEthernet0/0/2
  ip address 100.0.0.1 255.255.255.0 
-#
-interface NULL0
-#
 ospf 1 router-id 3.3.3.3 
  area 0.0.0.0 
   network 100.0.0.0 0.0.0.255 
   network 172.16.2.0 0.0.0.255 
   network 172.16.129.0 0.0.0.255 
   network 172.16.130.0 0.0.0.255 
-#
 ip route-static 0.0.0.0 0.0.0.0 172.16.130.2 preference 100
 ip route-static 0.0.0.0 0.0.0.0 100.0.0.2
-#
-user-interface con 0
- authentication-mode password
-user-interface vty 0 4
-user-interface vty 16 20
-#
-wlan ac
-#
-return
 ```
 
 #### R4：
 
 ```
-[V200R003C00]
-#
- sysname R4
-#
- board add 0/4 2FE 
-#
- snmp-agent local-engineid 800007DB03000000000000
- snmp-agent 
-#
- clock timezone China-Standard-Time minus 08:00:00
-#
-portal local-server load flash:/portalpage.zip
-#
- drop illegal-mac alarm
-#
- wlan ac-global carrier id other ac id 0
-#
- set cpu-usage threshold 80 restore 75
-#
-aaa 
- authentication-scheme default
- authorization-scheme default
- accounting-scheme default
- domain default 
- domain default_admin 
- local-user admin password cipher %$%$K8m.Nt84DZ}e#<0`8bmE3Uw}%$%$
- local-user admin service-type http
-#
-firewall zone Local
- priority 15
-#
+sysname R4
+
 interface Ethernet4/0/0
  ip address 172.16.130.2 255.255.255.0 
-#
-interface Ethernet4/0/1
-#
 interface GigabitEthernet0/0/0
  ip address 172.16.129.2 255.255.255.0 
-#
 interface GigabitEthernet0/0/1
  ip address 172.16.131.1 255.255.255.0 
  ospf cost 100
-#
 interface GigabitEthernet0/0/2
  ip address 172.16.132.1 255.255.255.0 
-#
-interface NULL0
-#
 ospf 1 
  area 0.0.0.0 
   network 172.16.129.0 0.0.0.255 
   network 172.16.130.0 0.0.0.255 
   network 172.16.131.0 0.0.0.255 
-#
 ip route-static 0.0.0.0 0.0.0.0 172.16.130.1 preference 100
 ip route-static 172.16.132.0 255.255.255.0 172.16.132.2
 ip route-static 172.16.133.0 255.255.255.0 172.16.131.1
 ip route-static 172.16.133.0 255.255.255.0 172.16.131.2
 ip route-static 172.16.134.0 255.255.255.0 172.16.132.2
-#
-user-interface con 0
- authentication-mode password
-user-interface vty 0 4
-user-interface vty 16 20
-#
-wlan ac
-#
-return
 ```
 
 #### R5：
 
 ```
-
-[V200R003C00]
-#
- sysname R5
-#
- snmp-agent local-engineid 800007DB03000000000000
- snmp-agent 
-#
- clock timezone China-Standard-Time minus 08:00:00
-#
-portal local-server load flash:/portalpage.zip
-#
- drop illegal-mac alarm
-#
- wlan ac-global carrier id other ac id 0
-#
- set cpu-usage threshold 80 restore 75
-#
-aaa 
- authentication-scheme default
- authorization-scheme default
- accounting-scheme default
- domain default 
- domain default_admin 
- local-user admin password cipher %$%$K8m.Nt84DZ}e#<0`8bmE3Uw}%$%$
- local-user admin service-type http
-#
-firewall zone Local
- priority 15
-#
+sysname R5
 interface GigabitEthernet0/0/0
  ip address 172.16.131.2 255.255.255.0 
-#
 interface GigabitEthernet0/0/1
  ip address 172.16.133.1 255.255.255.0 
-#
-interface GigabitEthernet0/0/2
-#
-interface NULL0
-#
 ip route-static 172.16.129.0 255.255.255.0 172.16.131.2
 ip route-static 172.16.132.0 255.255.255.0 172.16.133.2
 ip route-static 172.16.132.0 255.255.255.0 172.16.131.1
 ip route-static 172.16.134.0 255.255.255.0 172.16.133.2
-#
-user-interface con 0
- authentication-mode password
-user-interface vty 0 4
-user-interface vty 16 20
-#
-wlan ac
-#
-return
 ```
 
 #### R6：
 
 ```
-[V200R003C00]
-#
- sysname R6
-#
- snmp-agent local-engineid 800007DB03000000000000
- snmp-agent 
-#
- clock timezone China-Standard-Time minus 08:00:00
-#
-portal local-server load flash:/portalpage.zip
-#
- drop illegal-mac alarm
-#
- wlan ac-global carrier id other ac id 0
-#
- set cpu-usage threshold 80 restore 75
-#
-aaa 
- authentication-scheme default
- authorization-scheme default
- accounting-scheme default
- domain default 
- domain default_admin 
- local-user admin password cipher %$%$K8m.Nt84DZ}e#<0`8bmE3Uw}%$%$
- local-user admin service-type http
-#
-firewall zone Local
- priority 15
-#
+sysname R6
 interface GigabitEthernet0/0/0
  ip address 172.16.132.2 255.255.255.0 
-#
 interface GigabitEthernet0/0/1
  ip address 172.16.134.1 255.255.255.0 
-#
-interface GigabitEthernet0/0/2
-#
-interface NULL0
-#
 ip route-static 172.16.129.0 255.255.255.0 172.16.132.1
 ip route-static 172.16.131.0 255.255.255.0 172.16.132.1
 ip route-static 172.16.133.0 255.255.255.0 172.16.134.2
-#
-user-interface con 0
- authentication-mode password
-user-interface vty 0 4
-user-interface vty 16 20
-#
-wlan ac
-#
-return
 ```
 
 #### R7：
 
 ```
-[V200R003C00]
-#
- sysname R7
-#
- snmp-agent local-engineid 800007DB03000000000000
- snmp-agent 
-#
- clock timezone China-Standard-Time minus 08:00:00
-#
-portal local-server load flash:/portalpage.zip
-#
- drop illegal-mac alarm
-#
- wlan ac-global carrier id other ac id 0
-#
- set cpu-usage threshold 80 restore 75
-#
-dhcp enable
-#
-aaa 
- authentication-scheme default
- authorization-scheme default
- accounting-scheme default
- domain default 
- domain default_admin 
- local-user admin password cipher %$%$K8m.Nt84DZ}e#<0`8bmE3Uw}%$%$
- local-user admin service-type http
-#
-firewall zone Local
- priority 15
-#
+sysname R7
 interface GigabitEthernet0/0/0
  ip address 172.16.133.2 255.255.255.0 
-#
 interface GigabitEthernet0/0/1
  ip address 172.16.134.2 255.255.255.0 
-#
-interface GigabitEthernet0/0/2
-#
 interface GigabitEthernet0/0/2.1
  dot1q termination vid 60
  ip address 172.16.128.1 255.255.255.128 
-#
 interface GigabitEthernet0/0/2.2
  dot1q termination vid 70
  ip address 172.16.128.129 255.255.255.128 
-#
-interface NULL0
-#
 ip route-static 172.16.129.0 255.255.255.0 172.16.133.1
 ip route-static 172.16.131.0 255.255.255.0 172.16.133.1
 ip route-static 172.16.132.0 255.255.255.0 172.16.134.1
-#
-user-interface con 0
- authentication-mode password
-user-interface vty 0 4
-user-interface vty 16 20
-#
-wlan ac
-#
-return
 ```
 
-### 6.6 远程登录配置
+### 6.3 远程登录配置
 
 #### telnet-server：
 
