@@ -342,7 +342,7 @@ ip route-static 0.0.0.0 0.0.0.0 100.0.0.1
 
 4. **远程登录验证**：<img src="assets/image-20260410203146039.png" alt="image-20260410203146039" style="zoom:50%;" />
 
-## 八、 实验总结与故障排查
+## 八、 实验中故障排查
 
 - **遇到的问题**：在实验配置完成后，出现内网可以互通，但互联网 `test` 设备无法通过 Telnet 登录内网 `telnet-server` 的现象。具体表现为：`test` 连接时提示 `Don't support null authentication-mode`。
 - **解决方案**：**开启子接口 ARP 广播**： 经过排查发现，由于 R1 使用单臂路由（子接口）连接服务器所在的 VLAN 30，华为路由器子接口默认不主动发送 ARP 广播包。在 R1 的子接口 `G0/0/1.3` 下配置 `arp broadcast enable`成功解决问题。
