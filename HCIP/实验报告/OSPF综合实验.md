@@ -322,7 +322,7 @@ save
 
      ![image-20260527150751975](assets/image-20260527150751975.png)
 
-2. **验证虚链路（Virtual Link）连通性：**
+2. **验证虚链路连通性：**
 
    - 在 R7 或 R9 执行：`display ospf vlink` 
 
